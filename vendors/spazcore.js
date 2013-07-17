@@ -5556,6 +5556,35 @@ sc.helpers.getRelativeTime = function(time_value, labels, use_dateparse) {
 	}
 };
 
+/*
+ * makes absolute time
+ *
+ * This requires date.js
+ * http://www.datejs.com/
+ * @param {string} time_value a string to convert into relative time
+ * @param {object} [labels] labels for text portions of time descriptions
+ * @param {boolean} [use_dateparse] Whether or not to use the Date.parse method to parse the time_value. Default is FALSE
+ */
+sc.helpers.getAbsoluteTime = function(time_value, labels, use_dateparse) {
+	var parsed_date;
+	
+	if (use_dateparse === true) {
+		parsed_date = new Date.parse(time_value);
+	} else {
+		parsed_date = new Date(time_value);
+	}
+
+	var now = new Date();
+	var delta = parseInt( (now.getTime() - parsed_date.getTime()) / 1000, 10);
+
+	if(delta < (24*60*60)) {
+		return parsed_date.toLocaleTimeString();
+	} else {
+		return parsed_date.toLocaleDateString() + " " + parsed_date.toLocaleTimeString();
+	}
+};
+
+
 /**
  * @member sc.helpers
  */

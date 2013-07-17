@@ -77,7 +77,11 @@ enyo.kind({
 		}
 
 		toMacroize += "<span class='small' height = '13px'>";
-		toMacroize += sch.getRelativeTime(this.entry.publish_date);
+		if (App.Prefs.get("entry-timestamps") == "absolute") {
+			toMacroize += sch.getAbsoluteTime(this.entry.publish_date);
+		} else {
+			toMacroize += sch.getRelativeTime(this.entry.publish_date);
+		}
 		if (this.entry._orig.source) {
 			toMacroize += " from <span class = 'link'>{$_orig.source}</span>";
 		}

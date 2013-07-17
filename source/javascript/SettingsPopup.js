@@ -52,6 +52,14 @@ enyo.kind({
 					]}
 				]},
 				{kind: "Item", layoutKind: "HFlexLayout", components: [
+					{content: "Time Stamp"},
+					{kind: "Spacer"},
+					{kind: "ListSelector", value: "", preferenceProperty: "entry-timestamps", onChange: "setPreference", items: [
+						{caption: "Relative", value: "relative"},
+						{caption: "Absolute", value: "absolute"}
+					]}
+				]},
+				{kind: "Item", layoutKind: "HFlexLayout", components: [
 					{content: "Tap"},
 					{kind: "Spacer"},
 					{kind: "ListSelector", value: "", preferenceProperty: "entry-tap", onChange: "setPreference", items: [
