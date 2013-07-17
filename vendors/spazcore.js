@@ -5567,7 +5567,7 @@ sc.helpers.getRelativeTime = function(time_value, labels, use_dateparse) {
  */
 sc.helpers.getAbsoluteTime = function(time_value, labels, use_dateparse) {
 	var parsed_date;
-	
+
 	if (use_dateparse === true) {
 		parsed_date = new Date.parse(time_value);
 	} else {
@@ -13322,16 +13322,16 @@ SpazTwit.prototype.getAPIURL = function(key, urldata) {
 	urls.update           	= "statuses/update.json";
 	urls.destroy_status   	= "statuses/destroy/{{ID}}.json";
 	urls.dm_new             = "direct_messages/new.json";
-	urls.dm_destroy         = "direct_messages/destroy/{{ID}}.json";
-	urls.friendship_create  = "friendships/create/{{ID}}.json";
-	urls.friendship_destroy	= "friendships/destroy/{{ID}}.json";
+	urls.dm_destroy         = "direct_messages/destroy.json";
+	urls.friendship_create  = "friendships/create.json";
+	urls.friendship_destroy	= "friendships/destroy.json";
 	urls.friendship_show	= "friendships/show.json";
 	urls.friendship_incoming	= "friendships/incoming.json";
 	urls.friendship_outgoing	= "friendships/outgoing.json";
 	urls.graph_friends		= "friends/ids.json";
 	urls.graph_followers	= "followers/ids.json";
-	urls.block_create		= "blocks/create/{{ID}}.json";
-	urls.block_destroy		= "blocks/destroy/{{ID}}.json";
+	urls.block_create		= "blocks/create.json";
+	urls.block_destroy		= "blocks/destroy.json";
 	urls.follow             = "notifications/follow/{{ID}}.json";
 	urls.unfollow			= "notifications/leave/{{ID}}.json";
 	urls.favorites_create 	= "favorites/create.json";
