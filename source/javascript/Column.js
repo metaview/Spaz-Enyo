@@ -1,7 +1,7 @@
 enyo.kind({
 	name: "Spaz.Column",
 	kind: enyo.VFlexBox,
-	width: "322px",
+	//width: "322px",
 	style: "margin: 3px;",
 	className: "Column",
 	events: {
@@ -251,6 +251,32 @@ enyo.kind({
 				self.twit.setCredentials(auth);
 
 				switch (self.info.type) {
+					case SPAZ_COLUMN_UNIFIED:
+						loadStarted();
+						self.twit.getHomeTimeline(since_id, 50, null, null,
+							function(data) {
+								//self.processData(data, opts);
+								loadFinished(data, opts, account_id);
+							},
+							loadFailed
+						);
+						loadStarted();
+						self.twit.getReplies(since_id, 50, null, null,
+							function(data) {
+								//self.processData(data, opts);
+								loadFinished(data, opts, account_id);
+							},
+							loadFailed
+						);
+						loadStarted();
+						self.twit.getDirectMessages(since_id, 50, null, null,
+							function(data) {
+								//self.processData(data, opts);
+								loadFinished(data, opts, account_id);
+							},
+							loadFailed
+						);
+						break;
 					case SPAZ_COLUMN_HOME:
 						loadStarted();
 						self.twit.getHomeTimeline(since_id, 50, null, null,

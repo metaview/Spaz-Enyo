@@ -27,6 +27,7 @@ enyo.kind({
 
 	create: function(){
 		this.inherited(arguments);
+		this.optWidth = 322;
 
 		this.checkForUsers();
 
@@ -99,6 +100,14 @@ enyo.kind({
 
 		this.checkAccountChanges();
 
+		this.optWidth = Math.floor((window.innerWidth - 58) / this.columnData.length);
+		if (this.optWidth < 322) {
+			this.optWidth = 322;
+		}
+		if (this.optWidth > 644) {
+			this.optWidth = 644;
+		}
+
 		for (var i = 0; i < this.columnData.length; i++) {
 			if(!this.columnData[i].id){
 				this.columnData[i].id = _.uniqueId(new Date().getTime());
@@ -114,6 +123,7 @@ enyo.kind({
 				onMoveColumnLeft: "moveColumnLeft",
 				onMoveColumnRight: "moveColumnRight",
 				owner: this,
+				width: this.optWidth + "px",
 
 				onToolbarmousehold: "columnMousehold", onToolbarmouserelease: "columnMouserelease",
 				onToolbardragstart: "columnDragStart", onToolbardrag: "columnDrag", onToolbardragfinish: "columnDragFinish"
@@ -339,7 +349,7 @@ enyo.kind({
 					}
 				}
 			}));
-			inSender.applyStyle("width", "322px");
+			inSender.applyStyle("width", this.optWidth + "px");
 			//console.error("drug over", inSender.name);
 		}
 	},
@@ -374,7 +384,7 @@ enyo.kind({
 		this.isHolding = true;
 		this.activeColumn = inSender;
 
-		this.$["ColumnSpacer" + this.activeColumn.name.replace('Column', '')].applyStyle("width", "322px");
+		this.$["ColumnSpacer" + this.activeColumn.name.replace('Column', '')].applyStyle("width", this.optWidth + "px");
 
 		this.activeColumn.addClass("moving");
 		this.activeColumn.applyStyle("height", window.innerHeight - 12 + "px");
@@ -419,7 +429,7 @@ enyo.kind({
 						control.showHideEntries(false);
 					}
 					if(control.name.replace("ColumnSpacer", "") === this.activeColumn.name.replace('Column', '')){
-						control.applyStyle("width", "322px");
+						control.applyStyle("width", this.optWidth + "px");
 						setTimeout(function(){
 							control.addClass("columnSpacer");
 						}, 300);
