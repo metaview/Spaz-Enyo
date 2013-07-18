@@ -88,7 +88,9 @@ enyo.kind({
 		else {
 			enyo.asyncMethod(this, this.countUnread);
 		}
-
+	},
+	destroy: function(){
+		this.inherited(arguments);
 	},
 	checkArrows: function(){
 		if(this.name === "Column0"){
@@ -162,6 +164,7 @@ enyo.kind({
 
 			function loadStarted() {
 				if(accountsLoaded === 0){
+					self.currentTopId = (self.entries && (self.entries.length > self.$.list.$.scroller.top)) ? self.entries[self.$.list.$.scroller.top].service_id : 0;
 					self.doLoadStarted();
 					self.$.refresh.addClass("spinning");
 					self.$.refresh.setShowing(true);
@@ -178,8 +181,6 @@ enyo.kind({
 					dataLength = self.entries.length;
 				}
 				accountsLoaded++;
-
-
 			}
 			function loadFinished(data, opts, account_id) {
 				accountsLoaded--;
@@ -216,6 +217,19 @@ enyo.kind({
 							self.$.list.punt();
 
 							//self.$.list.refresh();
+						} else if (dataLength > 0) {
+							setTimeout(function() {
+									var sum = 0;
+									var cnt = 0;
+									for (var i=0; i<self.entries.length; i++) {
+										if (!isNaN(self.$.list.$.scroller.heights[i])) {
+											sum += self.$.list.$.scroller.heights[i];
+											cnt++;
+										}
+									}
+									self.$.list.$.scroller.$.scroll.y -= (sum / cnt) * Math.max(0, self.entries.length - dataLength);
+									self.$.list.$.scroller.scroll();
+								}, 500);
 						}
 					}
 				}
