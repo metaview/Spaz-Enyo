@@ -7,6 +7,7 @@ enyo.depends(
 	"vendors/jquery.min.js",
 	"vendors/jquery.embedly.js",
 	"vendors/showdown.js",
+	"vendors/oauth-urlencode.js",
 	"vendors/spazcore.js", // includes underscore, underscore.string
 	"vendors/spazcore-enyo-webos-network.js",
 	"vendors/ekl/List/",

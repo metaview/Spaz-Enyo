@@ -713,7 +713,7 @@ Date.CultureInfo = {
 
     /**
      * Get the week number. Week one (1) is the week which contains the first Thursday of the year. Monday is considered the first day of the week.
-     * This algorithm is a JavaScript port of the work presented by Claus Tøndering at http://www.tondering.dk/claus/cal/node8.html#SECTION00880000000000000000
+     * This algorithm is a JavaScript port of the work presented by Claus T\F8ndering at http://www.tondering.dk/claus/cal/node8.html#SECTION00880000000000000000
      * .getWeek() Algorithm Copyright (c) 2008 Claus Tondering.
      * The .getWeek() function does NOT convert the date to UTC. The local datetime is used. Please use .getISOWeek() to get the week of the UTC converted date.
      * @return {Number}  1 to 53
@@ -14716,7 +14716,6 @@ SpazTwit.prototype.getEchoHeader = function(opts) {
 	return auth_header;
 };
 
-
 /**
  * this is a general wrapper for non-timeline methods on the Twitter API. We
  * use this to call methods that will return a single response
@@ -14759,6 +14758,18 @@ SpazTwit.prototype._callMethod = function(opts) {
 		method = opts.method;
 	} else {
 		method = 'POST';
+	}
+
+	if (opts.data) {
+		var key, strParts = [];
+		for (key in opts.data) {
+			if (opts.data.hasOwnProperty(key)) {
+				strParts.push(oAuthUrlEncode(key.split('$')[0]) + "=" + oAuthUrlEncode(opts.data[key]));
+			}
+		}
+		opts.dataStr = strParts.sort().join("&");
+		console.error("Converted from " + JSON.stringify(opts.data));
+		console.error("To: " + opts.dataStr);
 	}
 
 	var xhr = jQuery.ajax({
@@ -14820,8 +14831,8 @@ SpazTwit.prototype._callMethod = function(opts) {
 				stwit.triggerEvent(opts.success_event_type, data);
 
 			}
-	    },
-	    'beforeSend':function(xhr){
+		},
+		'beforeSend':function(xhr){
 			sc.helpers.dump(opts.url + ' beforesend');
 			if (stwit.auth) {
 				sch.debug('signing request');
@@ -14829,10 +14840,11 @@ SpazTwit.prototype._callMethod = function(opts) {
 			} else {
 				sch.debug('NOT signing request -- no auth object provided');
 			}
-	    },
-	    'type': method,
-	    'url' : opts.url,
-		'data': opts.data,
+		},
+		'type': method,
+		'url' : opts.url,
+		'processData': false,
+		'data': opts.dataStr,
 		'dataType':'text'
 	});
 	return xhr;
